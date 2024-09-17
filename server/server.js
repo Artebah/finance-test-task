@@ -3,6 +3,7 @@ const express = require("express");
 const http = require("http");
 const io = require("socket.io");
 const cors = require("cors");
+const open = require("child_process").exec;
 
 const FETCH_INTERVAL = 5000;
 const PORT = process.env.PORT || 4000;
@@ -84,4 +85,6 @@ socketServer.on("connection", (socket) => {
 
 server.listen(PORT, () => {
   console.log(`Streaming service is running on http://localhost:${PORT}`); // http://localhost:4000
+
+  open(`start http://localhost:${PORT}`);
 });
