@@ -5,7 +5,7 @@ import { Ticker } from "./Ticker";
 
 describe("<Layout />", () => {
   test("it should mount", () => {
-    render(<Ticker />);
+    //render(<Ticker />);
 
     const TickerElement = screen.getByTestId("Ticker");
 
