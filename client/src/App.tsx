@@ -13,7 +13,7 @@ function App() {
         <StyledTitle>Price tickers in realtime</StyledTitle>
 
         {fakeData.map((tickerData) => (
-          <Ticker tickerData={tickerData} />
+          <Ticker key={tickerData.ticker} tickerData={tickerData} />
         ))}
       </Layout>
     </div>

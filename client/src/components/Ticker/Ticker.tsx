@@ -5,6 +5,7 @@ import { ReactComponent as ArrowDown } from "../../assets/icons/arrow-down.svg";
 import { getDateString } from "../../helpers/getDateString";
 import { ChangeValue } from "../../types/ChangeValue";
 import { getTickerChangeValue } from "../../helpers/getTickerChangeValue";
+import { socket } from "../../socket";
 
 interface TickerProps {
   tickerData: TickerData;
@@ -42,14 +43,15 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
 
   const [isActive, setIsActive] = React.useState(true);
 
-  const changeValue = getTickerChangeValue(change);
+  const $changeValue = getTickerChangeValue(change);
 
   const onSwitch = () => {
     setIsActive(!isActive);
+    socket.emit("switchTickerActivity", { ticker, isActive });
   };
 
   return (
-    <StyledWrapper isActive={isActive}>
+    <StyledWrapper $isActive={isActive}>
       <StyledCheckbox
         onChange={onSwitch}
         defaultChecked
@@ -60,12 +62,12 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
       <StyledTicker>{ticker}</StyledTicker>
       <StyledExchange>{exchange}</StyledExchange>
       <StyledP>{price}$</StyledP>
-      <StyledChange changeValue={changeValue}>
-        {changeValue === "increase" && "+"}
+      <StyledChange $changeValue={$changeValue}>
+        {$changeValue === "increase" && "+"}
         {change}
       </StyledChange>
-      <StyledChange isPercent changeValue={changeValue}>
-        {changeValue !== "none" && <ArrowDown />}
+      <StyledChange $isPercent $changeValue={$changeValue}>
+        {$changeValue !== "none" && <ArrowDown />}
         {change_percent} %
       </StyledChange>
       <StyledP>{getDateString(last_trade_time)}</StyledP>
@@ -77,7 +79,7 @@ const StyledP = styled.p`
   font-weight: 500;
 `;
 
-const StyledWrapper = styled.div<{ isActive?: boolean }>`
+const StyledWrapper = styled.div<{ $isActive?: boolean }>`
   padding: 10px 0;
   font-size: 14px;
   display: grid;
@@ -86,7 +88,7 @@ const StyledWrapper = styled.div<{ isActive?: boolean }>`
   text-align: right;
   gap: 10px;
   border-top: 1px solid #e8eaed;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0.5)};
+  opacity: ${({ $isActive }) => ($isActive ? 1 : 0.5)};
 
   &:last-child {
     border-bottom: 1px solid #e8eaed;
@@ -110,9 +112,10 @@ const StyledExchange = styled.span`
   text-align: left;
 `;
 
-const StyledChange = styled.span<{ changeValue: ChangeValue; isPercent?: boolean }>`
-  color: ${({ changeValue }) => changePriceStyles[changeValue].color};
-  background: ${({ changeValue, isPercent }) => (isPercent ? changePriceStyles[changeValue].background : "")};
+const StyledChange = styled.span<{ $changeValue: ChangeValue; $isPercent?: boolean }>`
+  color: ${({ $changeValue }) => changePriceStyles[$changeValue].color};
+  background: ${({ $changeValue, $isPercent }) =>
+    $isPercent ? changePriceStyles[$changeValue].background : ""};
   justify-self: right;
   padding: 5px 7px;
   border-radius: 5px;
@@ -121,8 +124,8 @@ const StyledChange = styled.span<{ changeValue: ChangeValue; isPercent?: boolean
   align-items: center;
   font-size: 16px;
   svg {
-    fill: ${({ changeValue }) => changePriceStyles[changeValue].color};
-    transform: ${({ changeValue }) => changePriceStyles[changeValue].transform};
+    fill: ${({ $changeValue }) => changePriceStyles[$changeValue].color};
+    transform: ${({ $changeValue }) => changePriceStyles[$changeValue].transform};
   }
 `;
 
