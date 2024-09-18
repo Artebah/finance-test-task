@@ -11,7 +11,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
 const StyledWrapper = styled.div`
   max-width: 1200px;
-  margin: 0 auto 0;
+  margin: 20px auto 0;
+  padding: 0 14px;
 `;
 
 export { Layout };
