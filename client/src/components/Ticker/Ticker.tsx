@@ -40,10 +40,23 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
     last_trade_time,
   } = tickerData;
 
+  const [isActive, setIsActive] = React.useState(true);
+
   const changeValue = getTickerChangeValue(change);
 
+  const onSwitch = () => {
+    setIsActive(!isActive);
+  };
+
   return (
-    <StyledWrapper>
+    <StyledWrapper isActive={isActive}>
+      <StyledCheckbox
+        onChange={onSwitch}
+        defaultChecked
+        type="checkbox"
+        name="switch-ticker"
+        id="switch-ticker"
+      />
       <StyledTicker>{ticker}</StyledTicker>
       <StyledExchange>{exchange}</StyledExchange>
       <StyledP>{price}$</StyledP>
@@ -64,15 +77,16 @@ const StyledP = styled.p`
   font-weight: 500;
 `;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ isActive?: boolean }>`
   padding: 10px 0;
   font-size: 14px;
   display: grid;
   align-items: center;
-  grid-template-columns: 47px 180px repeat(3, 160px) auto;
+  grid-template-columns: 30px 47px 180px repeat(5, 1fr);
   text-align: right;
   gap: 10px;
   border-top: 1px solid #e8eaed;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0.5)};
 
   &:last-child {
     border-bottom: 1px solid #e8eaed;
@@ -110,6 +124,10 @@ const StyledChange = styled.span<{ changeValue: ChangeValue; isPercent?: boolean
     fill: ${({ changeValue }) => changePriceStyles[changeValue].color};
     transform: ${({ changeValue }) => changePriceStyles[changeValue].transform};
   }
+`;
+
+const StyledCheckbox = styled.input`
+  transform: scale(1.4);
 `;
 
 export { Ticker };

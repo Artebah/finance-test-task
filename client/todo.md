@@ -1,7 +1,6 @@
 (A) Any additional visual effects to highlight positive or negative changes in the prices {cm:2024-09-17}
 (B) The possibility to switch on/off tickers by user
-  Add checkbox with styles
-  Write logic
+  Add checkbox with styles {cm:2024-09-18}
 (C) The possibility to specify interval time by user
   Add form with input to change interval
   Create new emit with socket.io
