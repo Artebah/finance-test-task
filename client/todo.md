@@ -1,4 +1,4 @@
-(A) Any additional visual effects to highlight positive or negative changes in the prices
+(A) Any additional visual effects to highlight positive or negative changes in the prices {cm:2024-09-17}
 (B) The possibility to switch on/off tickers by user
   Add checkbox with styles
   Write logic
