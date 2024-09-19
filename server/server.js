@@ -4,7 +4,8 @@ const http = require("http");
 const io = require("socket.io");
 const cors = require("cors");
 
-const FETCH_INTERVAL = 5000;
+let fetchIntervalId;
+let fetchInterval = 5000;
 const PORT = process.env.PORT || 4000;
 
 const tickers = [
@@ -80,17 +81,19 @@ function getQuotes(socket) {
   socket.emit("ticker", lastQuotes);
 }
 
-function trackTickers(socket) {
-  // run the first time immediately
+function trackTickers(socket, interval) {
   getQuotes(socket);
 
-  // every N seconds
-  const timer = setInterval(function () {
+  if (fetchIntervalId) {
+    clearInterval(fetchIntervalId);
+  }
+
+  fetchIntervalId = setInterval(function () {
     getQuotes(socket);
-  }, FETCH_INTERVAL);
+  }, interval);
 
   socket.on("disconnect", function () {
-    clearInterval(timer);
+    clearInterval(fetchIntervalId);
   });
 }
 
@@ -110,12 +113,17 @@ app.get("/", function (req, res) {
 
 socketServer.on("connection", (socket) => {
   socket.on("start", () => {
-    trackTickers(socket);
+    trackTickers(socket, fetchInterval);
   });
+
   socket.on("switchTickerActivity", (data) => {
     const currentTicker = tickers.find((ticker) => ticker.name === data.name);
 
     currentTicker.active = data.active;
+  });
+
+  socket.on("changeInterval", (newInterval) => {
+    trackTickers(socket, newInterval);
   });
 });
 

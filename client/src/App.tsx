@@ -5,13 +5,14 @@ import { Layout } from "./components/Layout/Layout";
 import { Ticker } from "./components/Ticker/Ticker";
 import { socket } from "./socket";
 import { TickerData } from "./types/TickerData";
+import { ChangeInterval } from "./components/ChangeInterval/ChangeInterval";
 
 function App() {
   const [tickers, setTickers] = React.useState<TickerData[]>([]);
 
   React.useEffect(() => {
     socket.on("ticker", (newTickers) => {
-      console.log(newTickers);
+      console.log("ticker event");
       setTickers(newTickers);
     });
   }, []);
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <Layout>
         <StyledTitle>Price tickers in realtime</StyledTitle>
+        <ChangeInterval />
 
         {tickers.map((tickerData) => (
           <Ticker key={tickerData.name} tickerData={tickerData} />
