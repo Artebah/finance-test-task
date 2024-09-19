@@ -3,18 +3,41 @@ const express = require("express");
 const http = require("http");
 const io = require("socket.io");
 const cors = require("cors");
-const open = require("child_process").exec;
 
 const FETCH_INTERVAL = 5000;
 const PORT = process.env.PORT || 4000;
 
 const tickers = [
-  "AAPL", // Apple
-  "GOOGL", // Alphabet
-  "MSFT", // Microsoft
-  "AMZN", // Amazon
-  "FB", // Facebook
-  "TSLA", // Tesla
+  {
+    name: "AAPL", // Apple
+    active: true,
+    removed: false,
+  },
+  {
+    name: "GOOGL", // Alphabet
+    active: true,
+    removed: false,
+  },
+  {
+    name: "MSFT", // Microsoft
+    active: true,
+    removed: false,
+  },
+  {
+    name: "AMZN", // Amazon
+    active: true,
+    removed: false,
+  },
+  {
+    name: "FB", // Facebook
+    active: true,
+    removed: false,
+  },
+  {
+    name: "TSLA", // Tesla
+    active: true,
+    removed: false,
+  },
 ];
 
 function randomValue(min = 0, max = 1, precision = 0) {
@@ -85,6 +108,4 @@ socketServer.on("connection", (socket) => {
 
 server.listen(PORT, () => {
   console.log(`Streaming service is running on http://localhost:${PORT}`); // http://localhost:4000
-
-  open(`start http://localhost:${PORT}`);
 });

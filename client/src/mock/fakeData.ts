@@ -1,6 +1,7 @@
 export const fakeData = [
   {
-    ticker: "AAPL",
+    name: "AAPL",
+    active: true,
     exchange: "NASDAQ",
     price: 279.29,
     change: -64.52,
@@ -10,7 +11,8 @@ export const fakeData = [
     last_trade_time: "2021-04-30T11:53:21.000Z",
   },
   {
-    ticker: "GOOGL",
+    name: "GOOGL",
+    active: true,
     exchange: "NASDAQ",
     price: 237.08,
     change: 154.38,
@@ -20,7 +22,8 @@ export const fakeData = [
     last_trade_time: "2021-04-30T11:53:21.000Z",
   },
   {
-    ticker: "MSFT",
+    name: "MSFT",
+    active: true,
     exchange: "NASDAQ",
     price: 261.46,
     change: 161.45,
@@ -30,7 +33,8 @@ export const fakeData = [
     last_trade_time: "2021-04-30T11:53:21.000Z",
   },
   {
-    ticker: "AMZN",
+    name: "AMZN",
+    active: true,
     exchange: "NASDAQ",
     price: 260.34,
     change: -128.71,
@@ -40,7 +44,8 @@ export const fakeData = [
     last_trade_time: "2021-04-30T11:53:21.000Z",
   },
   {
-    ticker: "FB",
+    name: "FB",
+    active: true,
     exchange: "NASDAQ",
     price: 266.77,
     change: 171.92,
@@ -50,7 +55,8 @@ export const fakeData = [
     last_trade_time: "2021-04-30T11:53:21.000Z",
   },
   {
-    ticker: "TSLA",
+    name: "TSLA",
+    active: true,
     exchange: "NASDAQ",
     price: 272.13,
     change: 0,

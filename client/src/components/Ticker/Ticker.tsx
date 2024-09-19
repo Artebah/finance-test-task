@@ -31,7 +31,8 @@ const changePriceStyles = {
 
 const Ticker: FC<TickerProps> = ({ tickerData }) => {
   const {
-    ticker,
+    name,
+    active,
     exchange,
     price,
     change,
@@ -41,13 +42,13 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
     last_trade_time,
   } = tickerData;
 
-  const [isActive, setIsActive] = React.useState(true);
+  const [isActive, setIsActive] = React.useState(active);
 
   const $changeValue = getTickerChangeValue(change);
 
   const onSwitch = () => {
     setIsActive(!isActive);
-    socket.emit("switchTickerActivity", { ticker, isActive });
+    socket.emit("switchTickerActivity", { name, isActive });
   };
 
   return (
@@ -59,7 +60,7 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
         name="switch-ticker"
         id="switch-ticker"
       />
-      <StyledTicker>{ticker}</StyledTicker>
+      <StyledTicker>{name}</StyledTicker>
       <StyledExchange>{exchange}</StyledExchange>
       <StyledP>{price}$</StyledP>
       <StyledChange $changeValue={$changeValue}>
