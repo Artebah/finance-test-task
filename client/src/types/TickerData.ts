@@ -1,7 +1,7 @@
 export interface TickerData {
   name: string;
   active: boolean;
-  //removed: boolean;
+  removed: boolean;
   exchange: string;
   price: number;
   change: number;

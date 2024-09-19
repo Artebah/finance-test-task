@@ -27,7 +27,7 @@ const ChangeInterval: FC<ChangeIntervalProps> = () => {
 
   return (
     <StyledChangeIntervalForm onSubmit={handleSubmit}>
-      <label htmlFor="change-interval">Set tickers interval</label>
+      <StyledH2>Set tickers interval</StyledH2>
       <input type="number" defaultValue={5000} name="change-interval" id="change-interval" />
       <button type="submit">change</button>
     </StyledChangeIntervalForm>
@@ -62,6 +62,11 @@ const StyledChangeIntervalForm = styled.form`
       background: #dcdcdc;
     }
   }
+`;
+
+const StyledH2 = styled.h2`
+  line-height: 1;
+  margin: 0 0 10px;
 `;
 
 export { ChangeInterval };

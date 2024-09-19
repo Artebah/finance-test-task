@@ -80,7 +80,7 @@ function getQuotes(socket) {
     return lastQuotes[i]; // keep unchanged
   });
 
-  socket.emit("ticker", lastQuotes);
+  socket.emit("ticker", { updatedTickers: lastQuotes, tickers });
 }
 
 function trackTickers(socket, interval) {
@@ -130,10 +130,18 @@ socketServer.on("connection", (socket) => {
     trackTickers(socket, newInterval);
   });
 
-  socket.on("removeTicker", (name) => {
-    const tickerToRemove = tickers.find((ticker) => ticker.name === name);
+  socket.on("removeTicker", (tickerName) => {
+    const tickerToRemove = tickers.find((ticker) => ticker.name === tickerName);
 
     tickerToRemove.removed = true;
+
+    getQuotes(socket);
+  });
+
+  socket.on("addTicker", (tickerName) => {
+    const tickerToAdd = tickers.find((ticker) => ticker.name === tickerName);
+
+    tickerToAdd.removed = false;
 
     getQuotes(socket);
   });
