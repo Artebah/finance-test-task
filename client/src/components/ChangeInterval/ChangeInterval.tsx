@@ -12,7 +12,17 @@ const ChangeInterval: FC<ChangeIntervalProps> = () => {
     const input = form.elements[0] as HTMLInputElement;
     const newInterval = input.value;
 
-    socket.emit("changeInterval", newInterval);
+    if (+newInterval < 1000) {
+      const proceedIntervalChanging = window.confirm(
+        "An interval of less than 1 second can impact processor productivity"
+      );
+
+      if (proceedIntervalChanging) {
+        socket.emit("changeInterval", newInterval);
+      }
+    } else {
+      socket.emit("changeInterval", newInterval);
+    }
   };
 
   return (

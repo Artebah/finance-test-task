@@ -11,5 +11,6 @@
   Add form to select ticker from the existing list
 (E) Add socket.io
   initial connection {cm:2024-09-19}
+  add switchTickerActivity event {cm:2024-09-19}
+  add changeInterval event {cm:2024-09-19}
 
-#Write logic for socket.io
