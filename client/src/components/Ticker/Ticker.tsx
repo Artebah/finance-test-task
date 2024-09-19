@@ -48,8 +48,11 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
 
   const onSwitch = () => {
     setIsActive(!isActive);
-    socket.emit("switchTickerActivity", { name, isActive });
   };
+
+  React.useEffect(() => {
+    socket.emit("switchTickerActivity", { name, active: isActive });
+  }, [isActive, name]);
 
   return (
     <StyledWrapper $isActive={isActive}>

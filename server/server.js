@@ -57,19 +57,27 @@ function utcDate() {
   );
 }
 
-function getQuotes(socket) {
-  const quotes = tickers.map((ticker) => ({
-    ticker,
-    exchange: "NASDAQ",
-    price: randomValue(100, 300, 2),
-    change: randomValue(-200, 200, 2),
-    change_percent: randomValue(0, 1, 2),
-    dividend: randomValue(0, 1, 2),
-    yield: randomValue(0, 2, 2),
-    last_trade_time: utcDate(),
-  }));
+let lastQuotes;
 
-  socket.emit("ticker", quotes);
+function getQuotes(socket) {
+  lastQuotes = tickers.map((ticker, i) => {
+    if (ticker.active) {
+      return {
+        ...ticker,
+        exchange: "NASDAQ",
+        price: randomValue(100, 300, 2),
+        change: randomValue(-200, 200, 2),
+        change_percent: randomValue(0, 1, 2),
+        dividend: randomValue(0, 1, 2),
+        yield: randomValue(0, 2, 2),
+        last_trade_time: utcDate(),
+      };
+    }
+
+    return lastQuotes[i]; // keep unchanged
+  });
+
+  socket.emit("ticker", lastQuotes);
 }
 
 function trackTickers(socket) {
@@ -103,6 +111,11 @@ app.get("/", function (req, res) {
 socketServer.on("connection", (socket) => {
   socket.on("start", () => {
     trackTickers(socket);
+  });
+  socket.on("switchTickerActivity", (data) => {
+    const currentTicker = tickers.find((ticker) => ticker.name === data.name);
+
+    currentTicker.active = data.active;
   });
 });
 
