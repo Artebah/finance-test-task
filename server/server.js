@@ -4,9 +4,11 @@ const http = require("http");
 const io = require("socket.io");
 const cors = require("cors");
 
+const PORT = process.env.PORT || 4000;
+
 let fetchIntervalId;
 let fetchInterval = 5000;
-const PORT = process.env.PORT || 4000;
+let lastQuotes;
 
 const tickers = [
   {
@@ -58,10 +60,10 @@ function utcDate() {
   );
 }
 
-let lastQuotes;
-
 function getQuotes(socket) {
-  lastQuotes = tickers.map((ticker, i) => {
+  const filteredTickers = tickers.filter((ticker) => !ticker.removed);
+
+  lastQuotes = filteredTickers.map((ticker, i) => {
     if (ticker.active) {
       return {
         ...ticker,
@@ -123,7 +125,17 @@ socketServer.on("connection", (socket) => {
   });
 
   socket.on("changeInterval", (newInterval) => {
+    fetchInterval = newInterval;
+
     trackTickers(socket, newInterval);
+  });
+
+  socket.on("removeTicker", (name) => {
+    const tickerToRemove = tickers.find((ticker) => ticker.name === name);
+
+    tickerToRemove.removed = true;
+
+    getQuotes(socket);
   });
 });
 

@@ -7,7 +7,7 @@
   Create new emit with socket.io {cm:2024-09-19}
   Add handler on the server {cm:2024-09-19}
 (D) The possibility to add/remove ticker from watching group
-  Add remove button in Ticker component
+  Add remove button in Ticker component {cm:2024-09-19}
   Add form to select ticker from the existing list
 (E) Add socket.io
   initial connection {cm:2024-09-19}

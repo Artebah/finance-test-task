@@ -6,6 +6,7 @@ import { getDateString } from "../../helpers/getDateString";
 import { ChangeValue } from "../../types/ChangeValue";
 import { getTickerChangeValue } from "../../helpers/getTickerChangeValue";
 import { socket } from "../../socket";
+import { ReactComponent as RemoveIcon } from "../../assets/icons/remove.svg";
 
 interface TickerProps {
   tickerData: TickerData;
@@ -50,6 +51,10 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
     setIsActive(!isActive);
   };
 
+  const onRemove = () => {
+    socket.emit("removeTicker", name);
+  };
+
   React.useEffect(() => {
     socket.emit("switchTickerActivity", { name, active: isActive });
   }, [isActive, name]);
@@ -75,6 +80,9 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
         {change_percent} %
       </StyledChange>
       <StyledP>{getDateString(last_trade_time)}</StyledP>
+      <StyledRemoveButton onClick={onRemove}>
+        <RemoveIcon />
+      </StyledRemoveButton>
     </StyledWrapper>
   );
 };
@@ -84,7 +92,7 @@ const StyledP = styled.p`
 `;
 
 const StyledWrapper = styled.div<{ $isActive?: boolean }>`
-  padding: 10px 0;
+  padding: 10px 15px;
   font-size: 14px;
   display: grid;
   align-items: center;
@@ -135,6 +143,25 @@ const StyledChange = styled.span<{ $changeValue: ChangeValue; $isPercent?: boole
 
 const StyledCheckbox = styled.input`
   transform: scale(1.4);
+`;
+
+const StyledRemoveButton = styled.button`
+  background: none;
+  border: 0;
+  width: 40px;
+  height: 50px;
+  justify-self: end;
+  cursor: pointer;
+
+  svg {
+    transition: all 0.3s ease 0s;
+  }
+
+  &:hover {
+    svg {
+      transform: scale(1.06);
+    }
+  }
 `;
 
 export { Ticker };
