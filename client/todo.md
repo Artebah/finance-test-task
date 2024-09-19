@@ -8,6 +8,7 @@
 (D) The possibility to add/remove ticker from watching group
   Add remove button in Ticker component
   Add form to select ticker from the existing list
-(E) Any additional functionality you consider useful
+(E) Add socket.io
+  initial connection {cm:2024-09-19}
 
 #Write logic for socket.io
