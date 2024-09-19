@@ -18,11 +18,9 @@ const AddTicker: FC<AddTickerProps> = ({ initialTickers }) => {
 
   const defaultSelectValue = removedTickers.length ? "Choose ticker" : "No tikers available";
 
-  console.log(defaultSelectValue);
-
   return (
     <div>
-      <StyledH2>Add removed tickers</StyledH2>
+      <StyledLabel htmlFor="add-ticker">Add removed tickers</StyledLabel>
       <StyledSelect onChange={onChange} defaultValue={defaultSelectValue} name="add-ticker" id="add-ticker">
         {removedTickers.length ? (
           <>
@@ -42,13 +40,16 @@ const AddTicker: FC<AddTickerProps> = ({ initialTickers }) => {
   );
 };
 
-const StyledH2 = styled.h2`
+const StyledLabel = styled.label`
   line-height: 1;
   margin: 0 0 20px;
+  display: block;
+  font-weight: 700;
+  font-size: 1.5em;
 `;
 
 const StyledSelect = styled.select`
-  width: 100%;
+  width: 250px;
   border-radius: 10px;
   padding: 5px 10px;
 `;

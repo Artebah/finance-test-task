@@ -14,7 +14,6 @@ function App() {
 
   React.useEffect(() => {
     socket.on("ticker", ({ updatedTickers, tickers }) => {
-      console.log(tickers, updatedTickers);
       setTickers(updatedTickers);
       setInitialTickers(tickers);
     });
@@ -41,7 +40,7 @@ const StyledTitle = styled.div`
   text-align: center;
   font-size: 40px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `;
 
 const StyledActionsWrapper = styled.div`

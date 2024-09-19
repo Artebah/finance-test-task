@@ -61,13 +61,17 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
 
   return (
     <StyledWrapper $isActive={isActive}>
-      <StyledCheckbox
-        onChange={onSwitch}
-        defaultChecked
-        type="checkbox"
-        name="switch-ticker"
-        id="switch-ticker"
-      />
+      <label htmlFor="switch-ticker" id="switch-ticker-label">
+        <StyledCheckbox
+          onChange={onSwitch}
+          defaultChecked
+          type="checkbox"
+          name="switch-ticker"
+          id="switch-ticker"
+          aria-labelledby="switch-ticker-label"
+        />
+      </label>
+
       <StyledTicker>{name}</StyledTicker>
       <StyledExchange>{exchange}</StyledExchange>
       <StyledP>{price}$</StyledP>
@@ -80,7 +84,7 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
         {change_percent} %
       </StyledChange>
       <StyledP>{getDateString(last_trade_time)}</StyledP>
-      <StyledRemoveButton onClick={onRemove}>
+      <StyledRemoveButton aria-label="remove-ticker-button" onClick={onRemove}>
         <RemoveIcon />
       </StyledRemoveButton>
     </StyledWrapper>
