@@ -84,7 +84,7 @@ const Ticker: FC<TickerProps> = ({ tickerData }) => {
         {change_percent} %
       </StyledChange>
       <StyledP>{getDateString(last_trade_time)}</StyledP>
-      <StyledRemoveButton aria-label="remove-ticker-button" onClick={onRemove}>
+      <StyledRemoveButton data-testid="remove-button" aria-label="remove-ticker-button" onClick={onRemove}>
         <RemoveIcon />
       </StyledRemoveButton>
     </StyledWrapper>
