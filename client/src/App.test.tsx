@@ -83,6 +83,8 @@ describe("App component", () => {
   test("renders App and child elements", () => {
     render(<App />);
 
+    // getByText for text elements
+    // getByRole for interactive elements (select, input...)
     expect(screen.getByText(/Price tickers in realtime/i)).toBeInTheDocument();
 
     expect(screen.getByRole("option", { name: /AAPL/i })).toBeInTheDocument();
@@ -93,8 +95,12 @@ describe("App component", () => {
   test("renders tickers received from the socket event", async () => {
     render(<App />);
 
+    // Ensure socket 'ticker' event is listened to
+    // toHaveBeenCalledWith is used to check params of the function which we put in expect
+    // expect.any(Function) often is used with other matchers to check that the argument is a function
     expect(socket.on).toHaveBeenCalledWith("ticker", expect.any(Function));
 
+    // Simulate receiving data from the socket
     const tickerCallback = (socket.on as jest.Mock).mock.calls[0][1];
     act(() => {
       tickerCallback({ updatedTickers: mockTickers, tickers: mockTickers });

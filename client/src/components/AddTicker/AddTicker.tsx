@@ -21,7 +21,12 @@ const AddTicker: FC<AddTickerProps> = ({ initialTickers }) => {
   return (
     <div>
       <StyledLabel htmlFor="add-ticker">Add removed tickers</StyledLabel>
-      <StyledSelect onChange={onChange} defaultValue={defaultSelectValue} name="add-ticker" id="add-ticker">
+      <StyledSelect
+        onChange={onChange}
+        defaultValue={defaultSelectValue}
+        disabled={!removedTickers.length}
+        name="add-ticker"
+        id="add-ticker">
         {removedTickers.length ? (
           <>
             <option>Choose ticker</option>
