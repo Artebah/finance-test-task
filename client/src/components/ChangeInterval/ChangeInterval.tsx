@@ -26,7 +26,7 @@ const ChangeInterval: FC<ChangeIntervalProps> = () => {
   };
 
   return (
-    <StyledChangeIntervalForm onSubmit={handleSubmit}>
+    <StyledChangeIntervalForm data-testid="interval-form" onSubmit={handleSubmit}>
       <StyledLabel htmlFor="change-interval">Set tickers interval</StyledLabel>
       <input type="number" defaultValue={5000} name="change-interval" id="change-interval" />
       <button type="submit">change</button>
